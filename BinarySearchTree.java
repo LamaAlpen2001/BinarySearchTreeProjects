@@ -96,7 +96,20 @@ public class BinarySearchTree<ContentType extends ComparableContent<ContentType>
      */
     public void insert(ContentType pContent) {
         if(pContent != null){
-          
+          if(this.isEmpty()){
+            node = new BSTNode<ContentType>(pContent);
+          }
+          else{
+            if(pContent.isLess(node.content)){
+              node.left.insert(pContent);
+            }
+            if(pContent.isGreater(node.content)){
+              node.left.insert(pContent);
+            }
+            if(pContent.isEqual(node.content)){
+              System.out.println("Eingabe schon vorhanden");
+            }
+          }
         }
     }
 
@@ -125,7 +138,7 @@ public class BinarySearchTree<ContentType extends ComparableContent<ContentType>
      *         Suchbaum leer ist
      *         
      */
-    public ContentType getContent(ContentType pContent, BinarySearchTree<ContentType> pLeftTree, BinarySearchTree<ContentType> pRightTree) {
+    public ContentType getContent() {
        if (this.isEmpty()) {
           return null;
        }
@@ -215,17 +228,24 @@ public class BinarySearchTree<ContentType extends ComparableContent<ContentType>
      * 
      */
     public ContentType search(ContentType pContent) {
-        //EIGENER CODE
-        // Abbrechen, da es kein Element zu suchen gibt.
-        //EIGENER CODE
-        // Element wird im linken Teilbaum gesucht.
-        //EIGENER CODE
-        // Element wird im rechten Teilbaum gesucht.
-        //EIGENER CODE
-        // Element wurde gefunden.
-        //EIGENER CODE
-        // Dieser Fall sollte nicht auftreten.
-        //EIGENER CODE
+      if(!this.isEmpty() || pContent == null){
+        if(pContent.isEqual(this.node.content)){
+         System.out.println("Name wurde gefunden.");
+         return pContent; 
+        } 
+        else{
+          if(pContent.isLess(this.node.content)){
+            return this.node.left.search(pContent);   
+          }
+          else{
+            return this.node.right.search(pContent);  
+          }
+        }
+      }
+      else{
+          System.out.println("Der Name konnte nicht gefunden werden, oder der Suchbaum ist leer");
+          return pContent;  
+      }
     }
     
     
